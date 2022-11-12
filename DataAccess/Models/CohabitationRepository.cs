@@ -1,5 +1,6 @@
 ﻿using DataAccess.Models.Interface;
 using Domain.Models;
+using Microsoft.Data.SqlClient;
 using Npgsql;
 using System;
 using System.Threading.Tasks;
@@ -16,22 +17,48 @@ namespace DataAccess.Models
 
         public async Task<Cohabitation[]> AddCohabitation(Cohabitation cohabitation)
         {
-            // как хранить ФИО
-            string commandText = $"INSERT INTO Users Values (Name, FirstName, Age, )('{cohabitation.FIO}')";
-            //await using (NpgsqlCommand cmd = new NpgsqlCommand(commandText, connection))
-            //{
-            //    cmd.Parameters.AddWithValue("id", id);
 
-            //    await using (NpgsqlDataReader reader = await cmd.ExecuteReaderAsync())
-            //        while (await reader.ReadAsync())
-            //        {
-            //            BoardGame game = ReadBoardGame(reader);
-            //            return game;
-            //        }
-            //}
-            //return null;
+            // TODO university распарсить => university == СамГТУ => UniversityId = 1; also district
+            string commandText = $"INSERT INTO Users (FIO, UniversityID, Age, Pay, Course, Phone, Email, DistrictID, Gender, Description)" +
+                                   "values('{cohabitation.FIO}', 1, {cohabitation.Age}, {cohabitation.Pay}, {cohabitation.Course}, '{cohabitation.Phone}'," +
+                                   " '{cohabitation.Email}', 1, '{cohabitation.Gender}', '{cohabitation.Description}')";
+            await using (SqlCommand sqlCommand = new()
+            {
+                CommandText = commandText,
+                Connection = _db.Connection
+            })
+                await sqlCommand.ExecuteNonQueryAsync();
+            
 
-            throw new NotImplementedException();
+            return await GetArray();
+        }
+
+        private async Task<Cohabitation[]> GetArray()
+        {
+            SqlCommand commandCount = new("select count(UsersID) from Users", _db.Connection);
+            SqlDataReader readerForCount = await commandCount.ExecuteReaderAsync();
+            Cohabitation[] array = new Cohabitation[(int) readerForCount.GetValue(0)];
+            Console.WriteLine(array.Length);                                                    // for checking
+
+            SqlCommand command = new("SELECT * FROM Users", _db.Connection);
+            SqlDataReader reader = await command.ExecuteReaderAsync();
+
+            if (reader.HasRows)
+            {
+                                                                                                // TODO дописать получение всех данных и добавление их в массив
+                while (await reader.ReadAsync())
+                {
+                    object id = reader.GetValue(0);
+                    object name = reader.GetValue(2);
+                    object age = reader.GetValue(1);
+
+                    Console.WriteLine($"{id} \t{name} \t{age}");
+                }
+            }
+
+            await reader.CloseAsync();
+
+            return Array.Empty<Cohabitation>();
         }
 
         public async Task<Cohabitation[]> Delete(string FIO)
