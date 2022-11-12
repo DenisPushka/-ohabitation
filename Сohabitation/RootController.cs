@@ -10,7 +10,7 @@ namespace Сohabitation
         public IActionResult Result()
         {
             using var db = new ApplicationContextSQL();
-            return View("index.cshtml");
+            return View("Index");
         }
 
 

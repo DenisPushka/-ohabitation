@@ -8,6 +8,7 @@ namespace DataAccess.Models.Interface
         Task<Cohabitation[]> AddCohabitation(Cohabitation cohabitation); 
         Task<Cohabitation[]> Delete(string FIO); 
         Task<Cohabitation[]> Insert(Cohabitation cohabitation); 
-        Task<Cohabitation[]> GetCohabitations(Filter filter); 
+        Task<Cohabitation[]> GetCohabitations(Filter filter);
+        Task<Cohabitation[]> GetArrayCohabitations ();
     }
 }

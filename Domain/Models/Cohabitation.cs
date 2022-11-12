@@ -9,11 +9,15 @@ namespace Domain.Models
     public class Cohabitation : Entity
     {
         public string FIO { get; set; }
-        public string Description { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
         public int Pay { get; set; }
-        public char[] Phone { get; set; }
-        //public string email { get; set; }
-        public University University { get; set; }
-        public District District { get; set; }
+        public int Age { get; set; }
+        public int Course { get; set; }
+        public char Gender { get; set; }
+        public string Description { get; set; }
+        public string University { get; set; }
+        public string District { get; set; }
     }
 }
