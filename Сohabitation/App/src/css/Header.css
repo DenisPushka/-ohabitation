@@ -1,0 +1,19 @@
+
+.header {
+    grid-area: header;
+    background-color:lightgray ;
+  }
+  
+  .header img {
+    width: 100%;
+  }
+  
+  .header button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+     transform: translate(-50%, -50%); 
+    font-size: 225%;
+    border-radius: 15px;
+  }
+  
