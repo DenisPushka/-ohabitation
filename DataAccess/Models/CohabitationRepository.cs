@@ -21,10 +21,10 @@ namespace DataAccess.Models
             var univerId = int.Parse(cohabitation.University);
             var district = int.Parse(cohabitation.District);
             string commandText = string.Format("INSERT INTO Users " +
-                "(FIO, UniversityID, Age, Pay, Course, Phone, Email, DistrictID, Gender, UserDescription, UserPassword)\n" +
-                "values('{0}', {1}, {2}, {3}, {4}, '{5}', '{6}', {7}, '{8}', '{9}', '{10}')",
+                "(FIO, UniversityID, Age, Pay, Course, Phone, Email, DistrictID, Gender, UserDescription, UserPassword, LinkToTelegram, LinkToVk)\n" +
+                "values('{0}', {1}, {2}, {3}, {4}, '{5}', '{6}', {7}, '{8}', '{9}', '{10}', '{11}', '{12}')",
                 cohabitation.FIO, univerId, cohabitation.Age, cohabitation.Pay, cohabitation.Course, cohabitation.Phone,
-                cohabitation.Email, district, cohabitation.Gender, cohabitation.Description, cohabitation.Password);
+                cohabitation.Email, district, cohabitation.Gender, cohabitation.Description, cohabitation.Password, cohabitation.LinkToTelegram, cohabitation.LinkToVk);
 
             await using (SqlCommand sqlCommand = new()
             {
@@ -57,7 +57,7 @@ namespace DataAccess.Models
             Cohabitation[] array = new Cohabitation[c];
 
             SqlCommand command = new("select Users.UsersID, Users.FIO, University.UniversityName, Users.Age, Users.Pay, Users.Course,\n" +
-                "Users.Phone, Users.Email, District.DistrictName, Users.Gender, Users.UserDescription,  Users.UserPassword\n" +
+                "Users.Phone, Users.Email, District.DistrictName, Users.Gender, Users.UserDescription,  Users.UserPassword, Users.LinkToTelegram, Users.LinkToVk\n" +
                 "from Users\n" +
                 "inner join University on University.UniversityID = Users.UniversityID\n" +
                 "inner join District on District.DistrictID = Users.DistrictID", _db.Connection);
@@ -79,7 +79,9 @@ namespace DataAccess.Models
                         Password = reader.GetValue(11).ToString(),
                         University = reader.GetValue(2).ToString(),
                         Gender = Convert.ToChar(reader.GetValue(9)),
-                        Description = reader.GetValue(10).ToString()
+                        Description = reader.GetValue(10).ToString(),
+                        LinkToTelegram = reader.GetValue(12).ToString(),
+                        LinkToVk = reader.GetValue(13).ToString()
                     };
                     i++;
                 }

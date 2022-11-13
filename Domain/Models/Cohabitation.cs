@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Domain.Models
 {
     public class Cohabitation : Entity
@@ -19,5 +14,7 @@ namespace Domain.Models
         public string Description { get; set; }
         public string University { get; set; }
         public string District { get; set; }
+        public string LinkToTelegram { get; set; }
+        public string LinkToVk { get; set; }
     }
 }
