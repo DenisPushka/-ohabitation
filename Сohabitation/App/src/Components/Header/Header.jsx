@@ -1,16 +1,20 @@
 import bm from './ButtonMain.module.css'
 import top from './Top.module.css'
 import head from './Header.module.css'
+import { Link } from 'react-router-dom'
+
 
 let Header = () => {
     return (
         <header className={head.header}>
             <img src="MainPhoto.jpg" />
             <div className={top.top}>
-                <div className={top.topLeft}>Cohabitation</div>
+                <div className={top.topLeft}>
+                     <Link to="/"> Cohabitation</Link>
+                    </div>
                 <div className={top.topRight}>
-                    <a href="">Вход </a>
-                    <a href="">Регистрация</a>
+                    <Link to="">Вход </Link>
+                    <Link to="">Регистрация</Link>
                 </div>
             </div>
             <div className='centered'> Мы поможем с соседом </div>
