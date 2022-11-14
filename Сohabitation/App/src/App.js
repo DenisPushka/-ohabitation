@@ -1,6 +1,7 @@
 import './App.css'
-import Header from './Components/Header'
-import MainContent from './Components/MainContent'
+import './Components/Cards/Content.css'
+import Header from './Components/Header/Header'
+import CardCohabitation from './Components/Cards/CardCohabitation'
 
 const App = () => {
   return (
@@ -8,10 +9,10 @@ const App = () => {
       <Header />
       <div className="marg">
         <content>
-          <MainContent />
-          <MainContent />
-          <MainContent />
-          <MainContent />
+          <CardCohabitation />
+          <CardCohabitation />
+          <CardCohabitation />
+          <CardCohabitation />
         </content>
       </div>
     </div>

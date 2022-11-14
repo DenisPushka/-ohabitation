@@ -1,0 +1,22 @@
+.top {
+  color: aliceblue;
+}
+
+.top a {
+  color: aliceblue;
+  text-decoration: none;
+  margin-right: 16px;
+}
+
+.topLeft {
+  position: absolute;
+  top: 8px;
+  left: 25px;
+  font-size: 300%;
+}
+
+.topRight {
+  position: absolute;
+  top: 25px;
+  right: 16px;
+}

@@ -1,0 +1,22 @@
+.marg {
+  grid-area: gr;
+  margin-top: 15px;
+  margin-left: 55px;
+  margin-right: 55px;
+}
+
+content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 1rem;
+}
+
+.block_content {
+  background-color: dodgerblue;
+  border-radius: 5px;
+}
+
+.block_content img {
+  width: 100%;
+  height: auto;
+}

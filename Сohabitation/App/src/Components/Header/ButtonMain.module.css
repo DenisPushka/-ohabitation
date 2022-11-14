@@ -1,15 +1,3 @@
-/* Page styling -- Not needed to replicate button visuals. */
-/* html,
-body {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  font-family: "Roboto Mono", monospace;
-} */
-
 button {
   margin: 50px;
   font-family: inherit;
