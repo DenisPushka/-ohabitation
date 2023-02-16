@@ -87,7 +87,7 @@ namespace DataAccess.Models
                 }
 
             await reader.CloseAsync();
-            return array;
+            return new Cohabitation[2];
         }
 
         // Подсчет кол-ва пользователей
