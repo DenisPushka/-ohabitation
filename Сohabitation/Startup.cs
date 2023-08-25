@@ -1,7 +1,5 @@
-using System.Configuration;
 using DataAccess;
 using DataAccess.Interface;
-using DataAccess.Models;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

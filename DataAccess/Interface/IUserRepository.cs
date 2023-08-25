@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DataAccess.Models.DTO;
+using DataAccess.Models;
 using Domain.Models;
 
 namespace DataAccess.Interface
@@ -18,11 +18,11 @@ namespace DataAccess.Interface
         Task<User[]> AddUser(User user);
 
         /// <summary>
-        /// Изменение данных у пользователя.
+        /// Обновление пользователя.
         /// </summary>
         /// <param name="newUser">Измененный пользователь.</param>
-        /// <returns>true - в случае успеха.</returns>
-        public bool UpdateUser(User newUser);
+        /// <returns><see langword="true" /> - в случае успеха.</returns>
+        public Task<bool> UpdateUser(User newUser);
 
         /// <summary>
         /// Поиск пользователей с фильтром.
@@ -32,18 +32,18 @@ namespace DataAccess.Interface
         //Task<User[]> GetUserOnFilter(Filter filter);
 
         /// <summary>
-        /// Получение пользователя.
+        /// Получение пользователя по <paramref name="guid"/>.
         /// </summary>
-        /// <param name="guid">По Id.</param>
+        /// <param name="guid">Id искомого пользователя.</param>
         /// <returns>Искомый пользователь.</returns>
-        public User GetUser(Guid guid);
+        public Task<User> GetUser(Guid guid);
 
         /// <summary>
         /// Получение пользователя.
         /// </summary>
         /// <param name="user">По аунтефикации.</param>
         /// <returns>Искомый пользователь.</returns>
-        public User GetUser(UserAuthentification user);
+        public Task<User> GetUser(UserAuthentification user);
 
         /// <summary>
         /// Получение всех пользователей.

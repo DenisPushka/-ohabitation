@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DataAccess.Interface;
-using DataAccess.Models.DTO;
+using DataAccess.Models;
 using Domain.Models;
 
 namespace DataAccess.Repositories
@@ -21,29 +21,37 @@ namespace DataAccess.Repositories
         /// <summary>
         /// Добавление пользователя.
         /// </summary>
-        /// <param name="user">Добавляемый пользователь.</param>
+        /// <param name="newUser">Добавляемый пользователь.</param>
         /// <returns>Массив всех пользователей.</returns>
-        public Task<User[]> AddUser(User user)
+        public Task<User[]> AddUser(User newUser)
         {
-            throw new NotImplementedException();
+            // TODO validation.
+            return _db.AddUser(newUser);
         }
 
         /// <summary>
         /// Обновление пользователя.
         /// </summary>
         /// <param name="newUser">Измененный пользователь.</param>
-        /// <returns>true - в случае успеха.</returns>
-        public bool UpdateUser(User newUser)
+        /// <returns><see langword="true" /> - в случае успеха.</returns>
+        public Task<bool> UpdateUser(User newUser)
         {
-            throw new NotImplementedException();
+            // TODO validation.
+            return _db.UpdateUser(newUser);
+        }
+        
+        /// <summary>
+        /// Получение пользователя по <paramref name="guid"/>.
+        /// </summary>
+        /// <param name="guid">Id искомого пользователя.</param>
+        /// <returns>Искомый пользователь.</returns>
+        public Task<User> GetUser(Guid guid)
+        {
+            // TODO validation.
+            return _db.GetUser(guid);
         }
 
-        public User GetUser(Guid guid)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User GetUser(UserAuthentification user)
+        public Task<User> GetUser(UserAuthentification user)
         {
             throw new NotImplementedException();
         }

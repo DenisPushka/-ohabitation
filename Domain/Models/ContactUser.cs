@@ -31,6 +31,11 @@ namespace Domain.Models
         /// Дата рождения.
         /// </summary>
         public DateTime DateBirthday { get; set; }
+        
+        /// <summary>
+        /// Дата рождения в строковом представлении для принятия даты из JSON.
+        /// </summary>
+        public string DateBirthdayString { get; set; }
 
         /// <summary>
         /// Фото.

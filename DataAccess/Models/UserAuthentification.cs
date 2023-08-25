@@ -1,4 +1,4 @@
-﻿namespace DataAccess.Models.DTO
+﻿namespace DataAccess.Models
 {
     /// <summary>
     /// Аунтефикация пользователя.

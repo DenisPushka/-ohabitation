@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DataAccess.Interface;
-using DataAccess.Models.DTO;
+using DataAccess.Models;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,6 +29,7 @@ namespace API.Controllers
         public async Task<IActionResult> AddPerson([FromBody] User user)
         {
             // Todo add validation.
+            user.ContactUser.DateBirthday = Convert.ToDateTime(user.ContactUser.DateBirthdayString);
             return Ok(await _userRepository.AddUser(user));
         }
 
