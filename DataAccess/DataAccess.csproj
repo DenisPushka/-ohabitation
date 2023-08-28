@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\ValidationHelper\ValidationHelper.csproj" />
   </ItemGroup>
 
   <ItemGroup>

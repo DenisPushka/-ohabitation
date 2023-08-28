@@ -19,14 +19,24 @@ namespace DataAccess.Repositories
         public UserRepository(ApplicationContextSql db) => _db = db;
 
         /// <summary>
+        /// Проверка пользователя в системе.
+        /// </summary>
+        /// <param name="user">Проверяемый пользоваель.</param>
+        /// <returns>Если пользователь найден - он и возвращается,
+        /// если не найден - будет возвращен пустой пользователь.</returns>
+        public async Task<User> Authorization(UserAuthentification user)
+        {
+            return await _db.CheckAuthorization(user);
+        }
+
+        /// <summary>
         /// Добавление пользователя.
         /// </summary>
         /// <param name="newUser">Добавляемый пользователь.</param>
         /// <returns>Массив всех пользователей.</returns>
-        public Task<User[]> AddUser(User newUser)
+        public async Task<User[]> AddUser(User newUser)
         {
-            // TODO validation.
-            return _db.AddUser(newUser);
+            return await _db.AddUser(newUser);
         }
 
         /// <summary>
@@ -34,21 +44,19 @@ namespace DataAccess.Repositories
         /// </summary>
         /// <param name="newUser">Измененный пользователь.</param>
         /// <returns><see langword="true" /> - в случае успеха.</returns>
-        public Task<bool> UpdateUser(User newUser)
+        public async Task<bool> UpdateUser(User newUser)
         {
-            // TODO validation.
-            return _db.UpdateUser(newUser);
+            return await _db.UpdateUser(newUser);
         }
-        
+
         /// <summary>
         /// Получение пользователя по <paramref name="guid"/>.
         /// </summary>
         /// <param name="guid">Id искомого пользователя.</param>
         /// <returns>Искомый пользователь.</returns>
-        public Task<User> GetUser(Guid guid)
+        public async Task<User> GetUser(Guid guid)
         {
-            // TODO validation.
-            return _db.GetUser(guid);
+            return await _db.GetUser(guid);
         }
 
         public Task<User> GetUser(UserAuthentification user)

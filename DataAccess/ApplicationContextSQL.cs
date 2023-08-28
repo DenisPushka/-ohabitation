@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using DataAccess.Models;
 using Domain.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -124,6 +125,8 @@ namespace DataAccess
         /// <returns>Искомый пользователь.</returns>
         public async Task<User> GetUser(Guid id)
         {
+            ValidationHelper.ValidationHelper.CheckGuid(id);
+            
             await using var connection = new SqlConnection(_connection);
             User user = null;
 
@@ -182,7 +185,8 @@ namespace DataAccess
         /// <returns>Возраст.</returns>
         private async Task<DateTime> GetDateBirthday(string login)
         {
-            // TODO validation login.
+            ValidationHelper.ValidationHelper.CheckString(login);
+            
             await using var connection = new SqlConnection(_connection);
             var dateBirthday = DateTime.Now;
 
@@ -222,7 +226,7 @@ namespace DataAccess
         /// <returns><see langword="true" /> - в случае успеха.</returns>
         public async Task<bool> UpdateUser(User newUser)
         {
-            // TODO validation all user's fields.
+            ValidationHelper.ValidationHelper.CheckUserForAllField(newUser);
 
             const string queryStringForUpdate =
                 "UPDATE [dbo].[User]" +
@@ -306,8 +310,8 @@ namespace DataAccess
         /// <returns>Массив всех пользователей.</returns>
         public async Task<User[]> AddUser(User newUser)
         {
-            // TODO validation all user's fields.
-            
+            ValidationHelper.ValidationHelper.CheckUserForAllField(newUser);
+
             await using var connection = new SqlConnection(_connection);
             await AddContactUser(newUser, connection);
             var contactUserId = await GetContactUserId(connection);
@@ -482,6 +486,48 @@ namespace DataAccess
                 Debug.WriteLine(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Проверка пользователя в системе.
+        /// </summary>
+        /// <param name="user">Проверяемый пользоваель.</param>
+        /// <returns>Если пользователь найден - он и возвращается,
+        /// если не найден - будет возвращен пустой пользователь.</returns>
+        public async Task<User> CheckAuthorization(UserAuthentification user)
+        {
+            ValidationHelper.ValidationHelper.CheckString(user?.Login);
+            ValidationHelper.ValidationHelper.CheckString(user?.Password);
+
+            await using var connection = new SqlConnection(_connection);
+            const string queryAddUser =
+                "SELECT UserId FROM [dbo].[User] " +
+                "WHERE Login = @login AND Password = @password";
+
+            var command = new SqlCommand(queryAddUser, connection);
+            var selectUser = new User { UserId = Guid.Empty };
+            command.Parameters.AddWithValue("@login", user.Login);
+            command.Parameters.AddWithValue("@password", user.Password);
+
+            try
+            {
+                connection.Open();
+
+                await using var reader = await command.ExecuteReaderAsync();
+                if (reader.HasRows && reader.ReadAsync().Result)
+                {
+                    selectUser.UserId = (Guid)reader[0];
+                }
+            }
+            catch (SqlException e)
+            {
+                Debug.WriteLine(e);
+                throw;
+            }
+
+            return selectUser.UserId == Guid.Empty
+                ? selectUser
+                : await GetUser(selectUser.UserId);
         }
     }
 }

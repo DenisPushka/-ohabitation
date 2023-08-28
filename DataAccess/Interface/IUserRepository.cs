@@ -10,12 +10,21 @@ namespace DataAccess.Interface
     /// </summary>
     public interface IUserRepository
     {
+
+        /// <summary>
+        /// Проверка пользователя в системе.
+        /// </summary>
+        /// <param name="user">Проверяемый пользоваель.</param>
+        /// <returns>Если пользователь найден - он и возвращается,
+        /// если не найден - будет возвращен пустой пользователь.</returns>
+        public Task<User> Authorization(UserAuthentification user);
+        
         /// <summary>
         /// Добавление пользователя.
         /// </summary>
-        /// <param name="user">Добавляемый пользователь.</param>
-        /// <returns></returns>
-        Task<User[]> AddUser(User user);
+        /// <param name="newUser">Добавляемый пользователь.</param>
+        /// <returns>Массив всех пользователей.</returns>
+        Task<User[]> AddUser(User newUser);
 
         /// <summary>
         /// Обновление пользователя.
@@ -49,6 +58,6 @@ namespace DataAccess.Interface
         /// Получение всех пользователей.
         /// </summary>
         /// <returns>Массив пользователей.</returns>
-        Task<User[]> GetUsers();
+        public Task<User[]> GetUsers();
     }
 }
