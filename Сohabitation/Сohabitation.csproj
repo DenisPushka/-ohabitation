@@ -27,4 +27,8 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="App\build\manifest.json" />
+  </ItemGroup>
+
 </Project>

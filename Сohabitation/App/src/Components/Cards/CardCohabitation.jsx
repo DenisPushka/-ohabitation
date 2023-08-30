@@ -1,16 +1,37 @@
-import card from './Card.module.css'
-import { Link } from 'react-router-dom'
+﻿import card from './Card.module.css';
+import {Link} from 'react-router-dom';
+import {Component} from "react";
+import {Nav} from "react-bootstrap";
 
-let CardCohabitation = (props) => {
-    return (
-        <div className={card.block_content}>
-            <img src={props.us.img} />
-            Имя: {props.us.FIO}
-            <br />
-            Здесь должна быть всплывающая инфа о пользователе
-            <Link to="/Profile">Перейти</Link>
-        </div>
-    )
+// Карта пользоваеля.
+class CardCohabitation extends Component {
+    state = {
+        props: null
+    };
+    
+    constructor(props) {
+        super(props);
+        
+        this.state.props = props;
+        // this.setState(props, props);
+    }
+    
+    render() {
+        return (
+            <>
+                <div className={card.block_content}>
+                    <>{this.props.user.contactUser.name} </>
+                    <>{this.props.user.contactUser.lastname} </>
+                    <>{this.props.user.contactUser.patronymic} <br/></>
+                    Возраст: <>{this.props.user.contactUser.age} </>
+                    Город: <>{this.props.user.contactUser.city.name}</>
+                    <img src={this.props.user.contactUser.photo}/>
+                    <Nav.Link href="/ProfileUser">Перейти</Nav.Link>
+                </div>
+            </>
+        );
+    }
+
 }
 
-export default CardCohabitation
+export default CardCohabitation;
