@@ -26,7 +26,7 @@ namespace API.Controllers
         /// <param name="newUser">Добавляемый пользователь.</param>
         /// <returns>Массив всех пользователей.</returns>
         [HttpPost("Add")]
-        public async Task<IActionResult> AddPerson([FromBody] User newUser)
+        public async Task<IActionResult> AddPerson([FromForm] User newUser)
         {
             ValidationHelper.ValidationHelper.CheckDateFromUser(newUser.ContactUser.DateBirthdayString);
             
@@ -37,11 +37,11 @@ namespace API.Controllers
         /// <summary>
         /// Проверка пользователя в системе.
         /// </summary>
-        /// <param name="user">Проверяемый пользоваель.</param>
+        /// <param name="user">Проверяемый пользователь.</param>
         /// <returns>Если пользователь найден - он и возвращается,
         /// если не найден - будет возвращен пустой пользователь.</returns>
         [HttpPost("Authorization")]
-        public async Task<IActionResult> Authorization([FromBody] UserAuthentification user)
+        public async Task<IActionResult> Authorization([FromForm] UserAuthentification user)
         {
             return Ok(await _userRepository.Authorization(user));
         }

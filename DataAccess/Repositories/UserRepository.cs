@@ -21,7 +21,7 @@ namespace DataAccess.Repositories
         /// <summary>
         /// Проверка пользователя в системе.
         /// </summary>
-        /// <param name="user">Проверяемый пользоваель.</param>
+        /// <param name="user">Проверяемый пользователь.</param>
         /// <returns>Если пользователь найден - он и возвращается,
         /// если не найден - будет возвращен пустой пользователь.</returns>
         public async Task<User> Authorization(UserAuthentification user)

@@ -1,9 +1,8 @@
-﻿import card from './Card.module.css';
-import {Link} from 'react-router-dom';
-import {Component} from "react";
+﻿import {Component} from "react";
 import {Nav} from "react-bootstrap";
+import card from './Card.module.css';
 
-// Карта пользоваеля.
+// Карта пользователя.
 class CardCohabitation extends Component {
     state = {
         props: null

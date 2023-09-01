@@ -14,7 +14,7 @@ namespace DataAccess.Interface
         /// <summary>
         /// Проверка пользователя в системе.
         /// </summary>
-        /// <param name="user">Проверяемый пользоваель.</param>
+        /// <param name="user">Проверяемый пользователь.</param>
         /// <returns>Если пользователь найден - он и возвращается,
         /// если не найден - будет возвращен пустой пользователь.</returns>
         public Task<User> Authorization(UserAuthentification user);
@@ -50,7 +50,7 @@ namespace DataAccess.Interface
         /// <summary>
         /// Получение пользователя.
         /// </summary>
-        /// <param name="user">По аунтефикации.</param>
+        /// <param name="user">По аутентификации.</param>
         /// <returns>Искомый пользователь.</returns>
         public Task<User> GetUser(UserAuthentification user);
 

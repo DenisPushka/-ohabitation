@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 import Header from "../Header/Header";
 import CardCohabitation from "../Cards/CardCohabitation";
 import "./Home.css";
@@ -8,9 +9,8 @@ class Home extends Component {
 
     state = {
         // Пользователи.
-        users: [],
-        // Данные по умолчанию.
-        defaultData: [
+        users: [
+            // Данные по умолчанию.
             {
                 minMoney: 0,
                 maxMoney: 0,
@@ -94,21 +94,35 @@ class Home extends Component {
             }
         ]
     };
+    
+    // Минимальное количество пользователей.
+    minCountUsers = 1;
 
     constructor(props) {
         super(props);
-
     }
 
-    // Получение всех пользователей.
     async componentDidMount() {
+        if (this.props.users.length <= this.minCountUsers) {
+            await this.getAllUsers();
+        } else {
+            this.setState({users: this.props.users});
+        }
+    }
+
+    /*
+    Получение всех пользователей.
+     */
+    async getAllUsers() {
         fetch("/api/User/GetAllUsers", {
             method: 'GET'
         })
             .then(res => res.json())
             .then(async data => {
-                    let buffer = data.concat(this.state.defaultData);
+                    let buffer = data.concat(this.state.users);
                     this.setState({users: buffer});
+
+                    await this.props.onGetAllUsers(buffer);
                 }
             );
     }
@@ -134,4 +148,14 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default connect(
+    state => ({
+        user: state.user,
+        users: state.users
+    }),
+    dispatch => ({
+        onGetAllUsers: (data) => {
+            dispatch({type: 'GET_USERS', payload: data});
+        }
+    })
+)(Home);

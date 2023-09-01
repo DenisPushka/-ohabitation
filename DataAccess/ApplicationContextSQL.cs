@@ -66,7 +66,7 @@ namespace DataAccess
         /// <summary>
         /// Получение всех пользователей.
         /// </summary>
-        /// <returns>Массив пользовтелей.</returns>
+        /// <returns>Массив пользователей.</returns>
         public async Task<User[]> GetUsers()
         {
             await using var connection = new SqlConnection(_connection);
@@ -447,7 +447,7 @@ namespace DataAccess
         /// Добавление пользователя.
         /// </summary>
         /// <param name="newUser">Добавляемый пользователь.</param>
-        /// <param name="connection">Подлючение к БД.</param>
+        /// <param name="connection">Подключение к БД.</param>
         /// <param name="contactUserId">ContactUserId добавляемого пользователя.</param>
         private async Task AddUser(User newUser, SqlConnection connection, Guid contactUserId)
         {
@@ -491,7 +491,7 @@ namespace DataAccess
         /// <summary>
         /// Проверка пользователя в системе.
         /// </summary>
-        /// <param name="user">Проверяемый пользоваель.</param>
+        /// <param name="user">Проверяемый пользователь.</param>
         /// <returns>Если пользователь найден - он и возвращается,
         /// если не найден - будет возвращен пустой пользователь.</returns>
         public async Task<User> CheckAuthorization(UserAuthentification user)
@@ -505,7 +505,7 @@ namespace DataAccess
                 "WHERE Login = @login AND Password = @password";
 
             var command = new SqlCommand(queryAddUser, connection);
-            var selectUser = new User { UserId = Guid.Empty };
+            var selectUser = new User { UserId = Guid.Empty};
             command.Parameters.AddWithValue("@login", user.Login);
             command.Parameters.AddWithValue("@password", user.Password);
 
@@ -522,7 +522,6 @@ namespace DataAccess
             catch (SqlException e)
             {
                 Debug.WriteLine(e);
-                throw;
             }
 
             return selectUser.UserId == Guid.Empty

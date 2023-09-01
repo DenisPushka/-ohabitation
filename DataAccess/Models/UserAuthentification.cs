@@ -1,7 +1,7 @@
 ﻿namespace DataAccess.Models
 {
     /// <summary>
-    /// Аунтефикация пользователя.
+    /// Аутентификации пользователя.
     /// </summary>
     public class UserAuthentification
     {

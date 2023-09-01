@@ -11,7 +11,7 @@
         public char Gender { get; set; }
 
         /// <summary>
-        /// Ценовой диапозон.
+        /// Ценовой диапазон.
         /// </summary>
         public int Pay { get; set; }
 

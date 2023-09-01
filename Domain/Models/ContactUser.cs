@@ -18,7 +18,7 @@ namespace Domain.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Фамилимя.
+        /// Фамилия.
         /// </summary>
         public string Lastname { get; set; }
 

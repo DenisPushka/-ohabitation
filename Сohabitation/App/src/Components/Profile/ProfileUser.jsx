@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import Header from "../Header/Header";
 
-// Профиль пользовтеля.
+// Профиль пользователя.
 class ProfileUser extends Component{
     
     constructor(props) {

@@ -5,7 +5,7 @@ using Domain.Models;
 namespace ValidationHelper
 {
     /// <summary>
-    /// Помошник в проверке данных.
+    /// Помощник в проверке данных.
     /// </summary>
     public static class ValidationHelper
     {
@@ -61,7 +61,7 @@ namespace ValidationHelper
         /// <summary>
         /// Проверка всех полей пользователя.
         /// </summary>
-        /// <param name="user">Проверяемый пользоветель.</param>
+        /// <param name="user">Проверяемый пользователь.</param>
         public static void CheckUserForAllField(User user)
         {
             if (user?.ContactUser == null 
