@@ -21,7 +21,7 @@ button {
 
 .fill::after {
   content: "";
-  background-color: #ffe54c;
+  background-color: #ffc04c;
   width: 100%;
   z-index: -1;
   position: absolute;

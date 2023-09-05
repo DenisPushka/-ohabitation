@@ -10,7 +10,7 @@
 
 .topLeft {
   position: absolute;
-  top: 8px;
+  top: 10px;
   left: 25px;
   font-size: 300%;
 }
@@ -18,5 +18,6 @@
 .topRight {
   position: absolute;
   top: 25px;
-  right: 16px;
+  right: 30px;
+  font-size: 28px;
 }

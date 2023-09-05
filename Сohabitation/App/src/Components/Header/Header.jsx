@@ -14,7 +14,7 @@ class Header extends Component {
     render() {
         return (<>
             <header className={head.header}>
-                <img src={"MainPhoto.jpg"}/>
+                <img className={head.img_wrap} src={"test_pictur_two.jpg"}/>
 
                 <div className={top.top}>
                     <div className={top.topLeft}>

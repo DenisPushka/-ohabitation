@@ -3,15 +3,20 @@
   background-color: lightgray;
 }
 
-.header img {
+.img_wrap {
   width: 100%;
+  height: 100px;
+  overflow: hidden;
+  object-fit: cover;
+
+  filter: brightness(30%)
 }
 
 .header button {
   position: absolute;
-  top: 20%;
+  top: 0.3%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 225%;
+  font-size: 165%;
   border-radius: 15px;
 }
