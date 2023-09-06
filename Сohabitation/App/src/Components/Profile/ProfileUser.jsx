@@ -7,15 +7,7 @@ class ProfileUser extends Component{
     constructor(props) {
         super(props);
     }
-    
-    render() {
-        return (
-            <>
-             <Header/>   
-            </>
-        )
-    }
-    
+
     getProfile() {
         fetch("/api/User/GetAllUsers", {
             method: 'GET'
@@ -24,6 +16,14 @@ class ProfileUser extends Component{
             .then(
                 result => console.log("Получили данные", result)
             )
+    }
+    
+    render() {
+        return (
+            <>
+                <Header/>
+            </>
+        )
     }
 }
 

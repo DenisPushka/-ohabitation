@@ -1,9 +1,12 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, {Component} from "react";
+import {connect} from "react-redux";
 import Header from "../Header/Header";
 import CardCohabitation from "../Cards/CardCohabitation";
 import "./Home.css";
 import "../Cards/Card.css";
+import photoDenis from '../../public/photoDenis.txt';
+import photoSergey from '../../public/photoSerega.txt';
+import photoGrigory from '../../public/photoGrisha.txt';
 
 // Домашняя страница.
 class Home extends Component {
@@ -36,7 +39,7 @@ class Home extends Component {
                         name: ''
                     },
                     age: 20,
-                    photo: 'My.JPG'
+                    photo: ''
                 }
             },
             {
@@ -63,7 +66,7 @@ class Home extends Component {
                         name: ''
                     },
                     age: 20,
-                    photo: 'Serega.JPG'
+                    photo: ''
                 }
             },
             {
@@ -90,36 +93,61 @@ class Home extends Component {
                         name: ''
                     },
                     age: 20,
-                    photo: 'Beer.JPG'
+                    photo: ''
                 }
             }
         ]
     };
 
     // Минимальное количество пользователей.
-    minCountUsers = 1;
+    minCountUsers = 3;
 
     // Количество размеров карточки (small, medium, large).
     countSize = 3;
 
+    // Пропорция для отображения минимальной карточки (до преобразования).
+    minProportion = 1;
+
+    // Параметр для измения пропорции
+    changeProportion = 1.5;
+
     constructor(props) {
         super(props);
+
+        this.addPhotoToDefaultData(photoDenis, 0);
+        this.addPhotoToDefaultData(photoSergey, 1);
+        this.addPhotoToDefaultData(photoGrigory, 2);
+    }
+
+    /**
+     * Добавление фото из файлов .txt (фото в формате .jpeg).
+     * @param {Object} photo Файл с данными фотографии.
+     * @param {Number} number Номер объекта в массиве.
+     * */
+    addPhotoToDefaultData(photo, number) {
+        fetch(photo)
+            .then(r => r.text())
+            .then((text) => {
+                let buffer = this.state.users.slice();
+                buffer[number].contactUser.photo = text;
+                this.setState({users: buffer});
+            });
     }
 
     async componentDidMount() {
-        if (this.props.users === null) {
-            return;
-        }
+        // if (this.props.users === null) {
+        //     return;
+        // }
 
-        if (this.props.users.length <= this.minCountUsers) {
+        if (this.props.users === null || this.props.users.length <= this.minCountUsers) {
             await this.getAllUsers();
         } else {
-            this.setState({ users: this.props.users });
+            this.setState({users: this.props.users});
         }
     }
 
-    /** 
-     * Получение всех пользователей.
+    /**
+     * Получение в state.users всех пользователей.
      */
     async getAllUsers() {
         fetch("/api/User/GetAllUsers", {
@@ -127,45 +155,62 @@ class Home extends Component {
         })
             .then(res => res.json())
             .then(async data => {
-                let buffer = data.concat(this.state.users);
-                this.setState({ users: buffer });
+                    let buffer = data.concat(this.state.users);
+                    this.setState({users: buffer});
 
-                await this.props.onGetAllUsers(buffer);
-            }
+                    await this.props.onGetAllUsers(buffer);
+                }
             );
+    }
+
+    /**
+     * Получение пропорции для карточки.
+     * @param {Object} user Пользователь, у которого берутся параметры для высчитывания пропорции.
+     * @return {Number} Пропорция в виде целого числа для карточки пользователя.
+     * */
+    getProportion(user) {
+        if (user.contactUser.photo !== null) {
+            const image = new Image();
+            image.src = 'data:image/png;base64,' + user.contactUser.photo;
+            let buffer = (image.naturalHeight / image.naturalWidth);
+
+            if (buffer <= this.minProportion || isNaN(buffer)) {
+                buffer = this.changeProportion;
+            } else if (buffer >= this.minProportion) {
+                buffer *= this.changeProportion;
+            }
+
+            return Math.floor(buffer);
+        }
+
+        return this.minProportion;
     }
 
     render() {
         return (
             <>
-                <Header />
+                <Header/>
                 <div class="pin_container">
-                    {/* Для наглядности добавлено несколько карточек без информации. */}
-                    <div class={"card card_large"}></div>
-                    <div class={"card card_medium"}></div>
 
                     {
                         // Перечисление всех пользователей.
                         this.state.users !== null && this.state.users.map((user) => {
 
-                            let sizeCard = "card card_large";
+                            const image = new Image();
+                            image.src = 'data:image/png;base64,' + user.contactUser.photo;
 
-                            switch (Math.floor(Math.random() * this.countSize)) {
-                                case 1:
-                                    sizeCard = "card card_small";
-                                    break;
-                                case 2:
-                                    sizeCard = "card card_medium";
-                                    break;
-                                case 3:
-                                    sizeCard = "card card_large";
-                                    break;
-                            }
+                            const style = {
+                                gridRowEnd: `span ${this.getProportion(user)}`
+                                // backgroundImage: `url('${image}')`
+                            };
 
                             return (
-                                <div className={sizeCard}>
-                                    <CardCohabitation user={user} />
-                                </div>
+                                <>
+                                    <figure className={"card"} style={style}>
+                                        <CardCohabitation user={user}/>
+                                    </figure>
+                                    <br/>
+                                </>
                             );
                         })
                     }
@@ -182,7 +227,7 @@ export default connect(
     }),
     dispatch => ({
         onGetAllUsers: (data) => {
-            dispatch({ type: 'GET_USERS', payload: data });
+            dispatch({type: 'GET_USERS', payload: data});
         }
     })
 )(Home);

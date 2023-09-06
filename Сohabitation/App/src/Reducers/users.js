@@ -40,7 +40,7 @@ const minCountUsers = 1;
  Получение и сохранение всех пользователей. 
  */
 export default function getAllUsers(state = defaultState, action) {
-    if (action.type === 'GET_USERS' && state.length <= minCountUsers) {
+    if (action.type === 'GET_USERS' && action.payload.length <= minCountUsers) {
         let buffer = state.concat(action.payload);
 
         if (sessionStorage.getItem('users') === 'undefined'

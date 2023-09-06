@@ -16,19 +16,23 @@ class CardCohabitation extends Component {
     }
 
     render() {
+        const image = new Image();
+        image.src = 'data:image/png;base64,' + this.props.user.contactUser.photo;
+        
         return (
             <>
                 <>{this.props.user.contactUser.name} </>
                 <>{this.props.user.contactUser.lastname} </>
-                <>{this.props.user.contactUser.patronymic} <br/></>
-                Возраст: <>{this.props.user.contactUser.age} </>
-                
+                <>{this.props.user.contactUser.patronymic} <br/><br/></>
+                Возраст: <>{this.props.user.contactUser.age} </> <br/>
+
                 Город: <>{this.props.user.contactUser.city.name}</><br/>
-                <img src={this.props.user.contactUser.photo}/>
-                
+                {/*Университет: <>{this.props.user.contactUser.university.name}</><br/>*/}
+
+
+                <img src={image.src} alt={image.title}/>    
                 <Nav.Link
-                    href="/ProfileUser"
-                    class={"block_content"}>
+                    href="/ProfileUser">
                     Перейти
                 </Nav.Link>
 
