@@ -10,7 +10,7 @@ class Header extends Component {
         super(props);
 
         this.showLittleMenu = this.showLittleMenu.bind(this);
-        this.checkOpenMenu = this.checkOpenMenu.bind(this);
+        this.checkOpenMenu = this.checkOpenMenu.bind(this); 
     }
 
     /**
