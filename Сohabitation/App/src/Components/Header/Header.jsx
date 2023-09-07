@@ -1,5 +1,6 @@
 import {Nav} from "react-bootstrap";
 import {Component} from "react";
+import EventChangeWindow from "../EventChangeWindow/EventChangeWindow";
 import "./NewHeader.css";
 
 // Шапка.
@@ -49,20 +50,16 @@ class Header extends Component {
             }
         };
     }
-    
+
+
     updateSize() {
-        let widthOutput = document.querySelector("#navId");
-        let mql = window.matchMedia("(min-width: 820px)");
-        if ((mql.matches) && (widthOutput.className !== 'nav')){
-            widthOutput.className = 'nav';
-            widthOutput.style.opacity = null;
-            widthOutput.style.transform = null;
-            // queue: true;
-        }
+
     }
 
     render() {
         return (<>
+            <EventChangeWindow/>
+            
             <header className={"newHeader"} onClick={this.checkOpenMenu}>
                 <nav>
 
@@ -79,8 +76,8 @@ class Header extends Component {
                     <ul class="nav" id="navId">
                         <li><Nav.Link href="/#">Главная</Nav.Link></li>
                         <li><Nav.Link href="/ProfileUser">Профиль</Nav.Link></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><Nav.Link href="/LogIn">Вход</Nav.Link></li>
+                        <li><Nav.Link href="/SignUp">Регистрация</Nav.Link></li>
                     </ul>
 
                 </nav>

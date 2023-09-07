@@ -13,7 +13,6 @@ import CardCohabitation from "./Components/Cards/CardCohabitation";
 import LogIn from "./Components/LogIn/LogIn";
 import SignUp from "./Components/SignUp/SignUp";
 
-
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
 
 // Роутер.
