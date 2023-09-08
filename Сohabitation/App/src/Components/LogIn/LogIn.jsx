@@ -56,10 +56,12 @@ class LogIn extends Component {
         })
             .then(res => {
                 res.json().then(async (data) => {
-
+                    debugger;
                     if (data.contactUser === null) {
                         alert('Неправильно введен логин или пароль!');
                         return;
+                    } else if (data === 'Permission denied!'){
+                        window.location = '/';
                     }
 
                     await this.props.onAddUser(data);

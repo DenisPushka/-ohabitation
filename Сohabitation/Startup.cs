@@ -12,23 +12,32 @@ namespace Сohabitation
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             
+            services.AddControllers();
+
             services.AddTransient<ApplicationContextSql>();
             services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddMvcCore();
             services.AddMvc();
+            
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddTransient<TraceIpAttribute>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
+            }
 
+            app.UseSession();
             app.UseStaticFiles();
+
             app.UseRouting();
-            
+
             app.UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllerRoute(

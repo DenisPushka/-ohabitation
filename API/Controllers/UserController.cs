@@ -4,6 +4,7 @@ using DataAccess.Interface;
 using DataAccess.Models;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Сohabitation;
 
 namespace API.Controllers
 {
@@ -11,6 +12,7 @@ namespace API.Controllers
     /// Контроллер для работы с пользователем.
     /// </summary>
     [ApiController, Route("api/[controller]")]
+    [ServiceFilter(typeof(TraceIpAttribute))]
     public class UserController : ControllerBase
     {
         /// <summary>
@@ -51,7 +53,10 @@ namespace API.Controllers
         /// </summary>
         /// <returns>Массив пользователей.</returns>
         [HttpGet("GetAllUsers")]
-        public async Task<IActionResult> GetUsers() => Ok(await _userRepository.GetUsers());
+        public async Task<IActionResult> GetUsers()
+        {
+            return Ok(await _userRepository.GetUsers());
+        }
 
         /// <summary>
         /// Получение пользователя по <paramref name="id"/>.
