@@ -10,7 +10,7 @@ class Header extends Component {
         super(props);
 
         this.showLittleMenu = this.showLittleMenu.bind(this);
-        this.checkOpenMenu = this.checkOpenMenu.bind(this); 
+        // this.checkOpenMenu = this.checkOpenMenu.bind(this); 
     }
 
     /**
@@ -22,12 +22,10 @@ class Header extends Component {
         openDropdown.className = openDropdown.className !== 'show' ? 'show' : 'hide';
 
         if (openDropdown.className === 'show') {
-            window.setTimeout(function () {
                 openDropdown.style.opacity = 1;
                 openDropdown.style.transform = 'translateY(0px)';
-            }, 0);
         } else if (openDropdown.className === 'hide') {
-            openDropdown.style.opacity = 0.2;
+            openDropdown.style.opacity = 0;
             openDropdown.style.transform = 'translateY(-500px)';
         }
     }
@@ -35,35 +33,33 @@ class Header extends Component {
     /**
      * Проверка на скрытие "гамбургера".
      */
-    async checkOpenMenu() {
-        window.onclick = (event: MouseEvent) => {
-            if (!event.target.matches('.hamburger')) {
-                let openDropdown = document.getElementById('navId');
-                if (openDropdown.className === 'show') {
-                    openDropdown.style.opacity = 0;
-                    openDropdown.style.transform = 'translateY(-500px)';
-                    openDropdown.className = 'hide';
-                } else {
-                    openDropdown.style.opacity = 0.2;
-                    openDropdown.style.transform = 'translateY(-500px)';
-                }
-            }
-        };
-    }
+    // async checkOpenMenu() {
+    //     window.onclick = (event: MouseEvent) => {
+    //         if (!event.target.matches('.hamburger')) {
+    //             let openDropdown = document.getElementById('navId');
+    //             if (openDropdown.className === 'show') {
+    //                 openDropdown.style.opacity = 0;
+    //                 openDropdown.style.transform = 'translateY(-500px)';
+    //                 openDropdown.className = 'hide';
+    //             } else {
+    //                 openDropdown.style.opacity = 0.2;
+    //                 openDropdown.style.transform = 'translateY(-500px)';
+    //             }
+    //         }
+    //     };
+    // }
 
 
-    updateSize() {
 
-    }
 
     render() {
         return (<>
             <EventChangeWindow/>
             
-            <header className={"newHeader"} onClick={this.checkOpenMenu}>
+            <header className={"newHeader"} >
                 <nav>
 
-                    <div>
+                    <div class="logotype">
                         Name
                     </div>
 

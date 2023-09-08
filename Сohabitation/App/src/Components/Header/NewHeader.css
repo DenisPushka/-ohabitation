@@ -3,7 +3,16 @@
     overflow: hidden;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     height: 60px;
+    background-color: #224B2B;
+    padding: 0 2vw;
+}
+
+.logotype {
+    color: #eee;
+    font-size: 30px;
+    font-weight: 700;
 }
 
 nav ul {
@@ -12,17 +21,19 @@ nav ul {
     
     list-style-type: none;
     display: flex;
+    align-content: center;
     flex-direction: row;
     /*justify-content: ;*/
     
     top: 60px;
     left: 0;
     right: 0;
-    background-color: #333;
 }
 
 nav li {
     margin-right: 20px;
+    display: flex;
+    align-content: center;
 }
 
 nav li:last-child {
@@ -33,7 +44,6 @@ nav a {
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
 }
 
@@ -80,8 +90,13 @@ nav a {
         padding: 14px 16px;
         text-align: left;
         border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        width: 100%;
+        background-color: #223F2B;
+        transition: all .2s ease-in-out;
     }
-
+    nav a:hover {
+        padding-left: 25px;
+    }
     nav ul.show-menu {
         display: flex;
         flex-direction: column;
