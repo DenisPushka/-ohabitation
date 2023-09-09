@@ -3,6 +3,7 @@ import Header from "../Header/Header";
 import {Nav} from "react-bootstrap";
 import {connect} from "react-redux";
 import "./Login.css";
+import Crypto from "../../crypto";
 
 // Авторизация.
 class LogIn extends Component {
@@ -25,13 +26,17 @@ class LogIn extends Component {
         this.checkLogIn = this.checkLogIn.bind(this);
     }
 
-    // Изменение логина для авторизации.
+    /**
+     * Изменение логина для авторизации.
+     * */
     async updateLogin(event) {
         await event.preventDefault();
         this.setState({user: {...this.state.user, login: event.target.value}});
     }
 
-    // Изменение пароля для авторизации.
+    /**
+     * Изменение пароля для авторизации.
+     * */
     async updatePassword(event) {
         await event.preventDefault();
         this.setState({user: {...this.state.user, password: event.target.value}});
@@ -47,8 +52,8 @@ class LogIn extends Component {
 
         let form = new FormData();
 
-        form.append('login', this.state.user.login);
-        form.append('password', this.state.user.password);
+        form.append('login', new Crypto().decryptStringAes(this.state.user.login));
+        form.append('password', new Crypto().decryptStringAes(this.state.user.password));
 
         fetch("/api/User/Authorization", {
             method: 'POST',
@@ -56,11 +61,10 @@ class LogIn extends Component {
         })
             .then(res => {
                 res.json().then(async (data) => {
-                    debugger;
                     if (data.contactUser === null) {
                         alert('Неправильно введен логин или пароль!');
                         return;
-                    } else if (data === 'Permission denied!'){
+                    } else if (data === 'Permission denied!') {
                         window.location = '/';
                     }
 

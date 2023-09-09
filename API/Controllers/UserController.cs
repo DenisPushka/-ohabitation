@@ -4,6 +4,7 @@ using DataAccess.Interface;
 using DataAccess.Models;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Сohabitation;
 
 namespace API.Controllers
@@ -16,24 +17,19 @@ namespace API.Controllers
     public class UserController : ControllerBase
     {
         /// <summary>
+        /// Источник конфигурации.
+        /// </summary>
+        private readonly IConfiguration _configuration;
+
+        /// <summary>
         /// Репозиторий пользователя.
         /// </summary>
         private readonly IUserRepository _userRepository;
 
-        public UserController(IUserRepository userRepository) => _userRepository = userRepository;
-
-        /// <summary>
-        /// Добавление пользователя.
-        /// </summary>
-        /// <param name="newUser">Добавляемый пользователь.</param>
-        /// <returns>Массив всех пользователей.</returns>
-        [HttpPost("Add")]
-        public async Task<IActionResult> AddPerson([FromForm] User newUser)
+        public UserController(IUserRepository userRepository, IConfiguration configuration)
         {
-            ValidationHelper.ValidationHelper.CheckDateFromUser(newUser.ContactUser.DateBirthdayString);
-            
-            newUser.ContactUser.DateBirthday = Convert.ToDateTime(newUser.ContactUser.DateBirthdayString);
-            return Ok(await _userRepository.AddUser(newUser));
+            _userRepository = userRepository;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -45,7 +41,29 @@ namespace API.Controllers
         [HttpPost("Authorization")]
         public async Task<IActionResult> Authorization([FromForm] UserAuthentification user)
         {
-            return Ok(await _userRepository.Authorization(user));
+            var newUser = new UserAuthentification
+            {
+                Login = AesEncryption.DecryptStringAes(user.Login, _configuration["SecurityKey"]),
+                Password = AesEncryption.DecryptStringAes(user.Password, _configuration["SecurityKey"])
+            };
+
+            return newUser.Login.Equals("keyError")
+                ? Ok(new User())
+                : Ok(await _userRepository.Authorization(newUser));
+        }
+
+        /// <summary>
+        /// Добавление пользователя.
+        /// </summary>
+        /// <param name="newUser">Добавляемый пользователь.</param>
+        /// <returns>Массив всех пользователей.</returns>
+        [HttpPost("Add")]
+        public async Task<IActionResult> AddPerson([FromForm] User newUser)
+        {
+            ValidationHelper.ValidationHelper.CheckDateFromUser(newUser.ContactUser.DateBirthdayString);
+
+            newUser.ContactUser.DateBirthday = Convert.ToDateTime(newUser.ContactUser.DateBirthdayString);
+            return Ok(await _userRepository.AddUser(newUser));
         }
 
         /// <summary>

@@ -2,7 +2,7 @@
 
 /**
  * Прослушивальщик изменения окна.
- * */
+ */
 class EventChangeWindow extends Component {
 
     state = {
@@ -47,14 +47,14 @@ class EventChangeWindow extends Component {
             widthOutput.style.opacity = null;
             widthOutput.style.transform = null;
         }
-        this.checkOpenMenu();
+        this.checkOpenMenu().then();
         // return <span>Window size: {this.state.width} x {this.state.height}</span>;
         return <div></div>;
     }
 
     /**
      * Обновление размеров окна.
-     * */
+     */
     updateDimensions = () => {
         this.setState({width: window.innerWidth, height: window.innerHeight});
     };

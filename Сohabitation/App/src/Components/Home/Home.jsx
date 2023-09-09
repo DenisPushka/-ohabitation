@@ -113,7 +113,7 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
-
+        
         this.addPhotoToDefaultData(photoDenis, 0);
         this.addPhotoToDefaultData(photoSergey, 1);
         this.addPhotoToDefaultData(photoGrigory, 2);
