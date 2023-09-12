@@ -12,7 +12,6 @@ namespace Сohabitation
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.AddControllers();
 
             services.AddTransient<ApplicationContextSql>();
@@ -20,10 +19,24 @@ namespace Сohabitation
 
             services.AddMvcCore();
             services.AddMvc();
-            
+
             services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddTransient<TraceIpAttribute>();
+
+
+            // services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //     .AddCookie(options =>
+            //
+            //     {
+            //         options.Cookie.HttpOnly = true;
+            //
+            //         options.Cookie.SecurePolicy = _environment.IsDevelopment()
+            //             ? CookieSecurePolicy.None
+            //             : CookieSecurePolicy.Always;
+            //
+            //         options.Cookie.SameSite = SameSiteMode.Lax;
+            //     });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -32,6 +45,9 @@ namespace Сohabitation
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseSession();
             app.UseStaticFiles();

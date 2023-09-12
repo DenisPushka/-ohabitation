@@ -2,6 +2,7 @@
 import Header from "../Header/Header";
 import {Nav} from "react-bootstrap";
 import {connect} from "react-redux";
+import md5 from 'md5';
 import "./Login.css";
 import Crypto from "../../crypto";
 
@@ -53,7 +54,7 @@ class LogIn extends Component {
         let form = new FormData();
 
         form.append('login', new Crypto().decryptStringAes(this.state.user.login));
-        form.append('password', new Crypto().decryptStringAes(this.state.user.password));
+        form.append('password', md5(this.state.user.password));//new Crypto().decryptStringAes(this.state.user.password));
 
         fetch("/api/User/Authorization", {
             method: 'POST',

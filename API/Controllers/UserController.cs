@@ -44,7 +44,7 @@ namespace API.Controllers
             var newUser = new UserAuthentification
             {
                 Login = AesEncryption.DecryptStringAes(user.Login, _configuration["SecurityKey"]),
-                Password = AesEncryption.DecryptStringAes(user.Password, _configuration["SecurityKey"])
+                Password = HashHelper.GetHash(user.Password)
             };
 
             return newUser.Login.Equals("keyError")
